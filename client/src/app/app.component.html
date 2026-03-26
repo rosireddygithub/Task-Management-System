@@ -1,0 +1,65 @@
+<!-- Toasts Container -->
+<div class="toast-container">
+  <div *ngFor="let toast of toasts$ | async" 
+       class="toast glass-panel animate-slide-in" 
+       [ngClass]="'toast-' + toast.type">
+    <div class="toast-indicator"></div>
+    <div class="toast-content">{{ toast.message }}</div>
+    <button class="toast-close" (click)="toastService.remove(toast.id)">&times;</button>
+  </div>
+</div>
+
+<div class="app-layout" *ngIf="user$ | async; else authLayout">
+  <!-- Sidebar -->
+  <aside class="sidebar glass-panel border-right">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon"></div>
+        <h2>TaskSync</h2>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+        <span class="icon">📋</span>
+        Dashboard
+      </a>
+      <a routerLink="/analytics" routerLinkActive="active" class="nav-item">
+        <span class="icon">📈</span>
+        Analytics
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="avatar">{{ (user$ | async)?.name?.charAt(0) }}</div>
+        <span>{{ (user$ | async)?.name }}</span>
+      </div>
+      <button class="btn btn-outline" style="width: 100%; justify-content: center; margin-bottom: 8px;" (click)="toggleTheme()">
+        {{ isLightMode ? '🌙 Switch to Dark' : '☀️ Switch to Light' }}
+      </button>
+      <button class="btn btn-outline btn-logout" (click)="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="topbar glass-panel border-bottom">
+      <div class="topbar-search">
+        <!-- Search placeholder -->
+      </div>
+      <div class="topbar-actions">
+        <!-- <button class="btn btn-primary" (click)="openNewTask()">+ New Task</button> -->
+      </div>
+    </header>
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
+
+<!-- Auth Layout -->
+<ng-template #authLayout>
+  <div class="auth-wrapper">
+    <div class="animated-bg"></div>
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>
