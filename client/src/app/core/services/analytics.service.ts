@@ -22,7 +22,7 @@ export interface AnalyticsData {
   providedIn: 'root'
 })
 export class AnalyticsService {
-  private apiUrl = `${environment.apiUrl}/analytics`;
+  private apiUrl = `${environment.apiUrl}/api/analytics`;
 
   constructor(private http: HttpClient) {}
 
