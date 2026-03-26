@@ -21,24 +21,24 @@ export class AuthService {
   }
 
   register(userData: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/auth/register`, userData).pipe(
-      tap((res: any) => {
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('user', JSON.stringify(res.user));
-        this.userSubject.next(res.user);
-      })
-    );
-  }
+  return this.http.post(`${environment.apiUrl}/api/auth/register`, userData).pipe(
+    tap((res: any) => {
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('user', JSON.stringify(res.user));
+      this.userSubject.next(res.user);
+    })
+  );
+}
 
-  login(credentials: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/auth/login`, credentials).pipe(
-      tap((res: any) => {
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('user', JSON.stringify(res.user));
-        this.userSubject.next(res.user);
-      })
-    );
-  }
+login(credentials: any): Observable<any> {
+  return this.http.post(`${environment.apiUrl}/api/auth/login`, credentials).pipe(
+    tap((res: any) => {
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('user', JSON.stringify(res.user));
+      this.userSubject.next(res.user);
+    })
+  );
+}
 
   logout() {
     localStorage.removeItem('token');
