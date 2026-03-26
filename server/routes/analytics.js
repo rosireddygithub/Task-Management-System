@@ -43,7 +43,7 @@ router.get('/', auth, async (req, res) => {
     // Timeline Data: Group by Due Date using existing tasks array to prevent aggregation crashes
     const timelineDataObj = {};
     tasks.forEach(task => {
-      if (task.dueDate) {
+      if (task.dueDate && task.status !== 'Done') {
         const dateStr = task.dueDate.toISOString().split('T')[0];
         if(!timelineDataObj[dateStr]) timelineDataObj[dateStr] = { count: 0, tasks: [] };
         timelineDataObj[dateStr].count++;
