@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { DragDropModule, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Task, TaskService } from '../../core/services/task.service';
 import { ToastService } from '../../core/services/toast.service';
+import { AuthService } from '../../core/services/auth.service';
 import { TaskCardComponent } from '../../shared/components/task-card.component';
 import { isPast } from 'date-fns';
 
@@ -436,7 +437,7 @@ import { isPast } from 'date-fns';
 export class DashboardComponent implements OnInit {
   private taskService = inject(TaskService);
   private toastService = inject(ToastService);
-
+  private authService = inject(AuthService);
   allTasks: Task[] = [];
   displayedTasks: Task[] = [];
   todoTasks: Task[] = [];
@@ -470,6 +471,7 @@ export class DashboardComponent implements OnInit {
   newTask: Partial<Task> = this.getEmptyTask();
 
   ngOnInit() {
+    if (!this.authService.isLoggedIn()) return; 
     this.loadTasks();
   }
 
